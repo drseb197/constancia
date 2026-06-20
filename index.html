@@ -332,8 +332,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   background-color:var(--orange);
   -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/></svg>") center/13px no-repeat;
           mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/></svg>") center/13px no-repeat}
-.pbtn{text-align:center;border-radius:999px;padding:12px;font-family:"Hanken Grotesk";font-weight:600;font-size:14px;
+.pbtn{display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;border-radius:999px;padding:12px;font-family:"Hanken Grotesk";font-weight:600;font-size:14px;
   background:var(--cream);border:1px solid var(--line-2);transition:background .25s,transform .25s}
+.waico{width:17px;height:17px;fill:currentColor;flex:0 0 auto}
 .pbtn:hover{background:var(--cream-2);transform:translateY(-2px)}
 .plan.star .pbtn{background:var(--orange);color:#fff;border-color:transparent}
 
@@ -400,7 +401,7 @@ footer{background:var(--cream);border-top:1px solid var(--line);padding:54px 0 0
     <a href="#mensajeria">Cómo seguimos</a>
     <a href="#como">Cómo funciona</a>
     <a href="#planes">Planes</a>
-    <a class="btn dark" href="#final">Abrir mi expediente <span class="arr">→</span></a>
+    <a class="btn dark" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener">Chatear conmigo <svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg></a>
   </div>
 </nav>
 
@@ -412,7 +413,7 @@ footer{background:var(--cream);border-top:1px solid var(--line);padding:54px 0 0
       <h1 id="heroH" style="margin-top:18px"></h1>
       <p class="lede">Mándame tus estudios: los guardo de por vida, construyo tu <b>línea base personal</b> y te aviso cuando un valor se mueve respecto a <em>ti</em> — no respecto al promedio de todos.</p>
       <div class="cta-row">
-        <a class="btn lg primary" href="#planes">Comenzar mi expediente <span class="arr">↘</span></a>
+        <a class="btn lg primary" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener">Chatear con el doctor <svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg></a>
         <a class="btn lg ghost" href="#idea">Ver la idea en acción →</a>
       </div>
       <div class="hero-stats">
@@ -645,16 +646,16 @@ footer{background:var(--cream);border-top:1px solid var(--line);padding:54px 0 0
     <div class="plans">
       <div class="plan reveal d1"><span class="ptag">PLAN 0</span><h3>Expediente Abierto</h3><div class="price">Gratis</div>
         <ul><li>Sube y guarda de por vida</li><li>Gráfica simple de tus valores</li><li>Reporte mensual</li></ul>
-        <a class="pbtn" href="#final">Abrir gratis</a></div>
+        <a class="pbtn" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener"><svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg>Abrir gratis</a></div>
       <div class="plan reveal d2"><span class="ptag">PLAN 1</span><h3>Bitácora Vigilada</h3><div class="price">$129<small> /mes</small></div>
         <ul><li>Todo lo del Plan 0</li><li>Intervalo personalizado + tendencia</li><li>1 interpretación al mes</li><li>Alertas por WhatsApp</li></ul>
-        <a class="pbtn" href="#final">Elegir</a></div>
+        <a class="pbtn" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener"><svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg>Elegir</a></div>
       <div class="plan star reveal d3"><span class="ptag">PLAN 2 · ESTRELLA</span><h3>Médico de Cabecera</h3><div class="price">$399<small> /mes</small></div>
         <ul><li>Mi interpretación firmada</li><li>Mi WhatsApp directo</li><li>Dudas ilimitadas + recetas</li><li>Nutrición y estudios integrados</li></ul>
-        <a class="pbtn" href="#final">Quiero este</a></div>
+        <a class="pbtn" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener"><svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg>Quiero este</a></div>
       <div class="plan reveal d4"><span class="ptag">PLAN 3</span><h3>Acompañamiento Integral</h3><div class="price">$899<small> /mes</small></div>
         <ul><li>Familiar (hasta 4) o crónico</li><li>Monitoreo diario</li><li>Respuesta &lt; 4 h hábiles</li><li>Prioridad y coordinación</li></ul>
-        <a class="pbtn" href="#final">Hablar conmigo</a></div>
+        <a class="pbtn" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener"><svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg>Hablar conmigo</a></div>
     </div>
   </div>
 </section>
@@ -693,7 +694,7 @@ footer{background:var(--cream);border-top:1px solid var(--line);padding:54px 0 0
     <h2 style="margin-top:14px">¿La salud es para <em>olvidarla?</em><br>No estamos de acuerdo.</h2>
     <p class="lede center" style="margin-top:22px">Abre tu expediente gratis. Nunca más pierdas un estudio ni empieces de cero. Pruébalo un trimestre; si no te aporta, lo dejas sin bronca.</p>
     <div class="cta-row">
-      <a class="btn lg primary" href="#top">Abrir mi expediente gratis <span class="arr">→</span></a>
+      <a class="btn lg primary" href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener">Chatear con el doctor <svg class="waico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.05 1.6 5.79L2 22l4.43-1.16a9.86 9.86 0 0 0 5.6 1.73h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.13c-.24.68-1.42 1.31-1.95 1.35-.5.04-1.13.21-3.66-.78-3.08-1.21-5.04-4.34-5.19-4.54-.15-.2-1.24-1.65-1.24-3.15s.79-2.24 1.07-2.55c.28-.31.61-.39.82-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.68-.17 1.36z"/></svg></a>
       <a class="btn lg ghost" href="#planes">Ver los planes</a>
     </div>
   </div>
@@ -712,7 +713,7 @@ footer{background:var(--cream);border-top:1px solid var(--line);padding:54px 0 0
       </div>
       <div class="fcol">
         <h4>Confianza</h4>
-        <a href="#honestidad">Lo que prometo</a><a href="#final">Aviso de privacidad</a><a href="#final">Contacto</a>
+        <a href="#honestidad">Lo que prometo</a><a href="#final">Aviso de privacidad</a><a href="https://wa.me/message/HC6KJXV2HRU4O1" target="_blank" rel="noopener">Contacto</a>
       </div>
     </div>
     <p class="fn">Dr. Sebastián Guardiola Segovia · Aguascalientes, México · Cédula Profesional 12324613. Esto es información y seguimiento médico; no sustituye una consulta presencial. Ante una urgencia, acude a servicios de emergencia. El tratamiento de datos de salud requiere tu consentimiento expreso y por escrito. Contenido orientativo. Cifras poblacionales citadas con fines de contexto (ENSANUT 2022).</p>
