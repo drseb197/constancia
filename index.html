@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Constancia — Tu médico de cabecera, para toda la vida</title>
+<meta name="description" content="Constancia guarda tu memoria médica de por vida, vigila tu línea base personal y te orienta cuando un valor se mueve respecto a ti — no respecto al promedio de todos."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Quicksand:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FBFAF7;      /* near-white base */
+  --cream-2:#ECF2EF;    /* soft green-tinted alt band */
+  --card:#FFFFFF;       /* white card */
+  --ink:#1A1916;        /* black text */
+  --ink-2:#52504A;      /* muted ink */
+  --mute:#8A857A;       /* labels */
+  --mute-2:#A8A294;
+  --green:#2B6E64;      /* haigeia teal */
+  --green-deep:#235A52;
+  --green-soft:#E2EDE9;
+  --orange:#E06A28;     /* primary accent */
+  --orange-2:#C2541A;   /* deeper */
+  --orange-soft:#F4E0CE;
+  --terra:#C2715A;      /* soft terracotta */
+  --ok:#2B6E64;         /* normal (brand green) */
+  --warn:#C2841F;       /* elevated */
+  --alert:#C2452F;      /* high */
+  --line:#E3E0D7;       /* hairline */
+  --line-2:#D4D0C5;
+  --black:#16140F;      /* deep band */
+  --r:20px;
+  --maxw:1180px;
+  --shadow:0 30px 60px -36px rgba(26,25,22,.4);
+  --shadow-sm:0 16px 36px -26px rgba(26,25,22,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background:var(--cream);
+  font-family:"Newsreader",Georgia,serif;
+  font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;position:relative;
+}
+/* warm ambient backdrop: paper grid + faint orange glow */
+.backdrop{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(54% 42% at 88% 4%, rgba(224,106,40,.10), transparent 60%),
+    radial-gradient(50% 46% at 6% 26%, rgba(43,110,100,.12), transparent 62%),
+    var(--cream);
+}
+.backdrop:before{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:radial-gradient(rgba(26,25,22,.05) 1px, transparent 1px);
+  background-size:24px 24px;
+  -webkit-mask-image:radial-gradient(120% 80% at 50% 0%, #000 25%, transparent 75%);
+          mask-image:radial-gradient(120% 80% at 50% 0%, #000 25%, transparent 75%);
+}
+
+h1,h2,h3,h4{font-family:"Hanken Grotesk",system-ui,sans-serif;font-weight:800;letter-spacing:-.025em;line-height:1.02;margin:0}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.serif-i{font-family:"Newsreader",serif;font-style:italic}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+em{font-style:italic;font-family:"Newsreader",serif;color:var(--orange);font-weight:500}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-2);display:inline-flex;align-items:center;gap:10px}
+.eyebrow:before{content:"";width:22px;height:1px;background:linear-gradient(90deg,var(--orange),transparent)}
+.eyebrow.num{gap:11px}
+.eyebrow.num b{background:var(--orange);color:#fff;font-family:"IBM Plex Mono";font-weight:600;padding:3px 8px;border-radius:5px;letter-spacing:.05em}
+.eyebrow.num:before{display:none}
+.muted{color:var(--mute)}
+
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:6px}
+
+/* progress */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:120;background:var(--orange);transition:width .1s linear}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;transition:background .3s,box-shadow .3s,padding .3s}
+.nav.scrolled{background:rgba(251,250,247,.84);backdrop-filter:saturate(150%) blur(12px);box-shadow:0 1px 0 var(--line);padding:12px 28px}
+.brand{display:flex;align-items:baseline;font-family:"Quicksand",sans-serif;font-weight:700;font-size:25px;letter-spacing:-.01em;color:var(--ink)}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);margin-left:3px;align-self:flex-end;margin-bottom:4px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a:not(.btn){font-family:"Hanken Grotesk";font-weight:500;font-size:14.5px;color:var(--ink-2);position:relative}
+.nav-links a:not(.btn):after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1.5px;background:var(--orange);transition:right .3s ease}
+.nav-links a:not(.btn):hover:after{right:0}
+.btn{display:inline-flex;align-items:center;gap:9px;border:0;cursor:pointer;border-radius:999px;
+  font-family:"Hanken Grotesk";font-weight:600;font-size:14.5px;padding:12px 22px;
+  transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+.btn.primary{background:var(--orange);color:#fff;box-shadow:0 12px 28px -14px rgba(224,106,40,.8)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 18px 38px -14px rgba(224,106,40,.9)}
+.btn.dark{background:var(--ink);color:var(--cream)}
+.btn.dark:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.btn.ghost:hover{background:rgba(26,25,22,.04);transform:translateY(-2px)}
+.btn .arr{width:24px;height:24px;border-radius:50%;background:var(--orange);display:grid;place-items:center;color:#fff;font-size:13px}
+.btn.primary .arr{background:rgba(255,255,255,.22)}
+.btn.lg{padding:15px 26px;font-size:16px}
+@media(max-width:880px){.nav-links a:not(.btn){display:none}}
+
+/* sections */
+section{position:relative}
+.band{padding:100px 0}
+.band.tight{padding:72px 0}
+.band.deep{background:var(--cream-2)}
+.center{text-align:center}
+.kick{margin-bottom:18px}
+.h2{font-size:clamp(32px,5vw,58px);line-height:1.02;max-width:18ch;letter-spacing:-.03em}
+.center .h2{margin-inline:auto}
+.lede{margin-top:22px;font-size:clamp(17px,1.7vw,20px);color:var(--ink-2);max-width:54ch;line-height:1.6}
+.center .lede{margin-inline:auto}
+b{font-weight:600}
+
+/* reveals */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ---------- HERO ---------- */
+.hero{padding:156px 0 84px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:42px}}
+.hero h1{font-size:clamp(44px,7vw,86px);line-height:.96;letter-spacing:-.035em;max-width:13ch}
+.hero h1 .serif-i{color:var(--orange);font-weight:500;letter-spacing:-.01em}
+.word{display:inline-block;opacity:0;transform:translateY(28px);animation:wordIn .72s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes wordIn{to{opacity:1;transform:none}}
+.hero .lede{opacity:0;animation:fadeUp .8s ease .95s forwards}
+.hero .cta-row{margin-top:30px;display:flex;gap:13px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease 1.1s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-stats{margin-top:46px;display:flex;gap:42px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease 1.25s forwards}
+.hstat .n{font-family:"Hanken Grotesk";font-weight:800;font-size:30px;letter-spacing:-.02em}
+.hstat .l{font-family:"IBM Plex Mono";font-size:11.5px;color:var(--mute);letter-spacing:.04em;line-height:1.5;margin-top:4px;text-transform:uppercase}
+
+/* hero card (line-base monitor) */
+.hcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px;
+  box-shadow:var(--shadow);opacity:0;animation:fadeUp 1s ease .5s forwards}
+.hcard .htag{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.hcard .hbig{font-family:"Hanken Grotesk";font-weight:800;font-size:40px;letter-spacing:-.03em;margin-top:4px}
+.hcard .hbig small{font-family:"IBM Plex Mono";font-size:15px;font-weight:400;color:var(--mute);letter-spacing:0}
+.spark-wrap{margin:14px 0 16px}
+.spark-wrap svg{width:100%;height:90px;display:block}
+.hrows{display:grid;gap:9px}
+.hrow{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;
+  background:var(--cream);border:1px solid var(--line);border-radius:13px;padding:10px 13px}
+.hrow .nm{font-family:"Hanken Grotesk";font-weight:500;font-size:14px;color:var(--ink-2)}
+.hrow .vl{font-family:"IBM Plex Mono";font-weight:500;font-size:14px}
+.hrow .vl small{color:var(--mute);font-weight:400}
+.tag{font-family:"IBM Plex Mono";font-size:10.5px;padding:4px 9px;border-radius:999px;letter-spacing:.02em;white-space:nowrap}
+.tag.ok{color:var(--ok);background:rgba(43,110,100,.12);border:1px solid rgba(43,110,100,.28)}
+.tag.warn{color:var(--warn);background:rgba(194,132,31,.14);border:1px solid rgba(194,132,31,.3)}
+.tag.or{color:var(--orange-2);background:rgba(224,106,40,.12);border:1px solid rgba(224,106,40,.3)}
+.float-pill{position:absolute;top:-16px;right:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:9px 13px;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow-sm)}
+.float-pill .av{width:26px;height:26px;border-radius:50%;background:var(--orange-soft);display:grid;place-items:center}
+.float-pill .av svg{width:14px;height:14px;stroke:var(--orange);fill:none;stroke-width:2}
+.float-pill .t b{font-family:"IBM Plex Mono";font-size:9px;letter-spacing:.1em;color:var(--mute);display:block}
+.float-pill .t span{font-family:"Hanken Grotesk";font-weight:600;font-size:12.5px}
+.conf{position:absolute;left:-14px;bottom:30px;background:var(--ink);color:var(--cream);border-radius:14px;padding:13px 16px;box-shadow:var(--shadow)}
+.conf .k{font-family:"IBM Plex Mono";font-size:9.5px;letter-spacing:.12em;color:#c9c3b4;display:flex;align-items:center;gap:6px}
+.conf .v{font-family:"Hanken Grotesk";font-weight:800;font-size:22px;margin-top:3px}
+.conf .s{font-family:"IBM Plex Mono";font-size:9.5px;color:#a39d8f;margin-top:2px}
+@media(max-width:980px){.conf{display:none}}
+
+/* ---------- STATS / ENSANUT ---------- */
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+@media(max-width:820px){.statgrid{grid-template-columns:1fr}}
+.gauge{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;align-items:center;gap:18px}
+.gauge svg{width:94px;height:94px;flex:0 0 auto}
+.gauge .ring-bg{fill:none;stroke:rgba(26,25,22,.08);stroke-width:9}
+.gauge .ring-fg{fill:none;stroke:var(--orange);stroke-width:9;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;
+  transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)}
+.gauge .pct{font-family:"Hanken Grotesk";font-weight:800;font-size:24px;fill:var(--ink)}
+.gauge .lab{font-size:15px;color:var(--ink-2);line-height:1.45}
+.statfoot{margin-top:18px;font-family:"IBM Plex Mono";font-size:11.5px;color:var(--mute-2)}
+
+/* ---------- SCRUBBER (signature) ---------- */
+.scrub-card{margin-top:44px;background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:28px 26px 24px}
+.scrub-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:6px}
+.readout{display:flex;gap:26px;flex-wrap:wrap}
+.ro{display:flex;flex-direction:column;gap:3px}
+.ro .k{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.ro .v{font-family:"IBM Plex Mono";font-size:15px;display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+.dotc{width:9px;height:9px;border-radius:50%;display:inline-block}
+.lead-badge{text-align:right}
+.lead-badge .n{font-family:"Hanken Grotesk";font-weight:800;font-size:clamp(34px,5vw,52px);line-height:1;color:var(--orange)}
+.lead-badge .l{font-family:"IBM Plex Mono";font-size:11px;color:var(--mute);letter-spacing:.06em}
+.scrub-svg{width:100%;height:auto;display:block;margin-top:6px;touch-action:pan-y}
+.scrub-controls{margin-top:12px}
+.slider-row{display:flex;align-items:center;gap:14px}
+.slider-row .mlab{font-family:"IBM Plex Mono";font-size:12px;color:var(--ink-2);min-width:96px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:999px;
+  background:linear-gradient(90deg,var(--ok),var(--orange) 60%,var(--alert));outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:#fff;border:3px solid var(--orange);box-shadow:0 4px 12px rgba(26,25,22,.28);cursor:grab}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--orange);box-shadow:0 4px 12px rgba(26,25,22,.28);cursor:grab}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-family:"IBM Plex Mono";font-size:11.5px;color:var(--mute)}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block;margin-right:7px;vertical-align:middle}
+.legend i.dash{height:0;border-top:2px dashed currentColor;width:16px}
+.note{margin-top:14px;font-family:"IBM Plex Mono";font-size:11px;color:var(--mute-2);line-height:1.5}
+
+/* two interactive widgets */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px}
+@media(max-width:880px){.duo{grid-template-columns:1fr}}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px 26px}
+.tcard h3{font-size:23px;margin-bottom:6px;letter-spacing:-.02em}
+.tcard .sub{color:var(--ink-2);font-size:15px;margin-bottom:20px}
+
+/* RCV */
+.rcv-read{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.rcv-num{font-family:"Hanken Grotesk";font-weight:800;font-size:34px}
+.rcv-arrow{color:var(--mute);font-size:20px}
+.rcv-delta{font-family:"IBM Plex Mono";font-size:14px;padding:6px 11px;border-radius:10px;background:var(--cream);border:1px solid var(--line)}
+.rcv-bar{height:30px;border-radius:10px;background:var(--cream);border:1px solid var(--line);position:relative;overflow:hidden;margin:16px 0}
+.rcv-fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px 0 0 10px;background:linear-gradient(90deg,rgba(43,110,100,.6),var(--orange));transition:width .25s ease}
+.rcv-thresh{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--orange-2)}
+.rcv-thresh:after{content:"RCV";position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-family:"IBM Plex Mono";font-size:9.5px;color:var(--orange-2)}
+.verdict{display:grid;gap:10px;margin-top:18px}
+.vrow{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--cream);border:1px solid var(--line);font-size:14.5px}
+.vrow .vk{font-family:"IBM Plex Mono";font-size:11px;color:var(--mute);min-width:118px;letter-spacing:.03em}
+.vrow .vv{font-family:"Hanken Grotesk";font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.rcv-lesson{margin-top:16px;font-size:15px;color:var(--ink-2);line-height:1.55;border-left:2px solid var(--orange);padding-left:14px;min-height:46px}
+
+/* curves */
+.curve-svg{width:100%;height:auto;display:block}
+.curve-read{font-family:"IBM Plex Mono";font-size:13px;color:var(--ink-2);margin-top:12px;line-height:1.7}
+.curve-read b{color:var(--ink)}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+@media(max-width:880px){.pillars{grid-template-columns:1fr}}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px 26px;
+  transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.pcard:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:var(--shadow-sm)}
+.pcard .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;
+  background:var(--green-soft);border:1px solid rgba(43,110,100,.25)}
+.pcard .ic svg{width:23px;height:23px;stroke:var(--green);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pcard h3{font-size:21px;margin-bottom:8px;letter-spacing:-.02em}
+.pcard p{font-size:15px;color:var(--ink-2)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+@media(max-width:880px){.steps{grid-template-columns:1fr}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px 24px;position:relative}
+.step .bn{font-family:"IBM Plex Mono";font-size:12px;color:var(--orange-2);letter-spacing:.1em}
+.step h3{font-size:20px;margin:12px 0 8px;letter-spacing:-.02em}
+.step p{font-size:14.5px;color:var(--ink-2)}
+.step .arrow{position:absolute;right:-26px;top:50%;transform:translateY(-50%);color:var(--mute-2);font-size:22px;z-index:2}
+@media(max-width:880px){.step .arrow{display:none}}
+
+/* ---------- MENSAJERIA (No es un bot + WhatsApp) ---------- */
+.msg-grid{display:grid;grid-template-columns:1fr .9fr;gap:50px;align-items:center;margin-top:10px}
+@media(max-width:940px){.msg-grid{grid-template-columns:1fr;gap:40px}}
+.msg-rule{height:1px;background:linear-gradient(90deg,var(--line-2),transparent);flex:1}
+.msg-head{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.msg-head .eyebrow{white-space:nowrap}
+.bot-h{font-size:clamp(34px,4.6vw,52px);letter-spacing:-.03em;line-height:1}
+.bot-h .serif-i{font-style:italic;font-family:"Newsreader",serif;color:var(--orange);font-weight:500}
+.msg-p{margin-top:22px;font-size:18px;color:var(--ink-2);max-width:46ch;line-height:1.6}
+.msg-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+@media(max-width:520px){.msg-cards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line-2);border-radius:14px;padding:22px 22px}
+.mcard .mk{font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.mcard .mv{font-family:"Hanken Grotesk";font-weight:800;font-size:30px;letter-spacing:-.02em;margin:8px 0 2px}
+.mcard .mv small{font-size:18px}
+.mcard .ms{font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+
+/* phone */
+.phone{width:100%;max-width:380px;margin:0 auto;border-radius:30px;background:#0b3b2c;padding:10px;
+  box-shadow:0 40px 80px -40px rgba(26,25,22,.55),0 0 0 1px rgba(26,25,22,.06)}
+.phone-screen{border-radius:22px;overflow:hidden;background:#0b3b2c}
+.wa-head{background:#0b3b2c;color:#fff;display:flex;align-items:center;gap:11px;padding:13px 14px}
+.wa-head .back{font-size:18px;opacity:.85;flex:0 0 auto}
+.wa-head .pa{width:38px;height:38px;flex:0 0 auto;border-radius:50%;background:linear-gradient(135deg,#caa14a,#a8772b);display:grid;place-items:center;
+  font-family:"Hanken Grotesk";font-weight:700;font-size:13px;color:#fff}
+.wa-head .pi{min-width:0;flex:1 1 auto}
+.wa-head .pi b{font-family:"Hanken Grotesk";font-weight:600;font-size:15px;display:block;line-height:1.2}
+.wa-head .pi span{font-size:11px;color:#bfe0cf;display:block;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-head .icons{margin-left:auto;flex:0 0 auto;display:flex;gap:14px;opacity:.85;font-size:14px}
+.wa-body{background:#e3ddd3;background-image:radial-gradient(rgba(0,0,0,.025) 1px,transparent 1px);background-size:18px 18px;
+  padding:16px 12px 14px;min-height:430px;display:flex;flex-direction:column;gap:9px}
+.wa-day{align-self:center;background:rgba(255,255,255,.7);color:#5b6b62;font-family:"Hanken Grotesk";font-weight:600;font-size:10.5px;
+  letter-spacing:.06em;padding:4px 12px;border-radius:8px;margin-bottom:4px}
+.bub{max-width:86%;padding:9px 13px 7px;border-radius:13px;font-family:"Hanken Grotesk";font-weight:450;font-size:15px;line-height:1.42;
+  position:relative;box-shadow:0 1px 1px rgba(0,0,0,.08);opacity:0;transform:translateY(8px) scale(.97);
+  transition:opacity .35s ease,transform .35s cubic-bezier(.2,1.3,.5,1)}
+.bub.show{opacity:1;transform:none}
+.bub.in{align-self:flex-start;background:#fff;color:#1f2c26;border-top-left-radius:3px}
+.bub.out{align-self:flex-end;background:#dcf8c6;color:#1f2c26;border-top-right-radius:3px}
+.bub .ti{font-size:10px;color:#8a9690;float:right;margin:5px 0 0 12px;font-family:"IBM Plex Mono"}
+.bub.out .ti{color:#5b9b6a}
+.bub .ck{color:#34b7f1;font-size:10px}
+.typing{align-self:flex-start;background:#fff;border-radius:12px;border-top-left-radius:3px;padding:11px 14px;display:none;
+  box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.typing.show{display:inline-flex;gap:4px}
+.typing span{width:7px;height:7px;border-radius:50%;background:#9aa6a0;animation:td 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+/* comparison */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
+@media(max-width:820px){.cmp{grid-template-columns:1fr}}
+.cbox{border-radius:var(--r);padding:30px 28px}
+.cbox.win{background:linear-gradient(180deg,rgba(43,110,100,.08),var(--card));border:1px solid rgba(43,110,100,.32)}
+.cbox.old{background:var(--card);border:1px solid var(--line)}
+.cbox .ctag{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.cbox.win .ctag{color:var(--green-deep)}.cbox.old .ctag{color:var(--mute)}
+.cbox h3{font-size:22px;margin-bottom:18px;letter-spacing:-.02em}
+.crow{display:flex;gap:11px;align-items:flex-start;font-size:15px;padding:9px 0;border-top:1px solid var(--line);color:var(--ink-2)}
+.cbox.old .crow{color:var(--mute)}
+.crow svg{width:19px;height:19px;flex:0 0 auto;margin-top:2px;fill:none;stroke-width:2.4}
+.cbox.win .crow svg{stroke:var(--green)}.cbox.old .crow svg{stroke:var(--mute-2)}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+@media(max-width:1040px){.plans{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;display:flex;flex-direction:column;
+  transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.plan:hover{transform:translateY(-6px);border-color:var(--line-2)}
+.plan.star{border-color:rgba(224,106,40,.5);background:linear-gradient(180deg,rgba(224,106,40,.08),var(--card));
+  box-shadow:0 30px 60px -38px rgba(224,106,40,.55)}
+.plan .ptag{font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.08em;color:var(--mute)}
+.plan.star .ptag{color:var(--orange-2)}
+.plan h3{font-size:20px;margin:8px 0 14px;letter-spacing:-.02em}
+.plan .price{font-family:"Hanken Grotesk";font-weight:800;font-size:33px;line-height:1;letter-spacing:-.02em}
+.plan .price small{font-family:"IBM Plex Mono";font-size:13px;font-weight:400;color:var(--mute)}
+.plan ul{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px;flex:1}
+.plan li{font-size:14px;color:var(--ink-2);display:flex;gap:9px;align-items:flex-start;font-family:"Hanken Grotesk";font-weight:450}
+.plan li:before{content:"";width:16px;height:16px;flex:0 0 auto;margin-top:2px;
+  background-color:var(--orange);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/></svg>") center/13px no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/></svg>") center/13px no-repeat}
+.pbtn{text-align:center;border-radius:999px;padding:12px;font-family:"Hanken Grotesk";font-weight:600;font-size:14px;
+  background:var(--cream);border:1px solid var(--line-2);transition:background .25s,transform .25s}
+.pbtn:hover{background:var(--cream-2);transform:translateY(-2px)}
+.plan.star .pbtn{background:var(--orange);color:#fff;border-color:transparent}
+
+/* promises */
+.prom{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:42px}
+@media(max-width:820px){.prom{grid-template-columns:1fr}}
+.pbx{border-radius:var(--r);padding:28px 26px}
+.pbx.yes{background:linear-gradient(180deg,rgba(43,110,100,.08),var(--card));border:1px solid rgba(43,110,100,.28)}
+.pbx.no{background:var(--card);border:1px solid var(--line)}
+.pbx h3{font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:10px;letter-spacing:-.02em}
+.pbx ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.pbx li{font-size:15px;display:flex;gap:11px;align-items:flex-start;color:var(--ink-2)}
+.pbx li svg{width:19px;height:19px;flex:0 0 auto;margin-top:3px;fill:none;stroke-width:2.4}
+.pbx.yes li svg{stroke:var(--ok)}.pbx.no li svg{stroke:var(--orange)}
+
+/* final (the BLACK of the palette) */
+.final{padding:120px 0;text-align:center;position:relative;overflow:hidden;background:var(--green-deep);color:#eef5f2}
+.final:before{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(60% 70% at 50% 0%,rgba(53,125,114,.55),transparent 60%),
+            radial-gradient(50% 60% at 82% 100%,rgba(224,106,40,.22),transparent 60%)}
+.final .wrap{position:relative;z-index:1}
+.final .eyebrow{color:var(--orange-soft)}
+.final h2{font-size:clamp(34px,5.6vw,62px);max-width:16ch;margin-inline:auto;color:#fff}
+.final h2 em{color:var(--orange-soft)}
+.final .lede{color:#cfe2dc}
+.final .cta-row{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.final .btn.ghost{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)}
+.final .btn.ghost:hover{background:rgba(255,255,255,.1)}
+
+/* footer with giant wordmark */
+footer{background:var(--cream);border-top:1px solid var(--line);padding:54px 0 0;overflow:hidden}
+.ft{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
+@media(max-width:760px){.ft{grid-template-columns:1fr}}
+.fb{font-family:"Quicksand",sans-serif;font-weight:700;font-size:26px;letter-spacing:-.01em;display:inline-flex;align-items:baseline}
+.fb .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);margin-left:3px;align-self:flex-end;margin-bottom:5px}
+.fcol h4{font-family:"IBM Plex Mono";font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+.fcol a{display:block;font-family:"Hanken Grotesk";font-weight:500;font-size:15px;color:var(--ink-2);margin-bottom:10px}
+.fcol a:hover{color:var(--orange-2)}
+.fdesc{margin-top:14px;font-size:15px;color:var(--ink-2);max-width:34ch}
+.fn{margin-top:34px;font-family:"IBM Plex Mono";font-size:11px;color:var(--mute-2);line-height:1.8;max-width:96ch}
+.giant{margin-top:30px;text-align:center;line-height:.8;font-family:"Quicksand",sans-serif;font-weight:700;
+  font-size:clamp(70px,21vw,300px);letter-spacing:-.02em;color:var(--ink);user-select:none;
+  display:flex;align-items:flex-end;justify-content:center}
+.giant .dot{width:.16em;height:.16em;border-radius:50%;background:var(--orange);margin-left:.04em;margin-bottom:.14em}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .word{opacity:1;transform:none}
+  .hero .lede,.hero .cta-row,.hero-stats,.hcard{opacity:1}
+  .bub{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="progress" id="prog"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">constancia<span class="dot"></span></a>
+  <div class="nav-links">
+    <a href="#idea">La idea</a>
+    <a href="#mensajeria">Cómo seguimos</a>
+    <a href="#como">Cómo funciona</a>
+    <a href="#planes">Planes</a>
+    <a class="btn dark" href="#final">Abrir mi expediente <span class="arr">→</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow" style="opacity:0;animation:fadeUp .8s ease .15s forwards">Medicina longitudinal · Dr. Sebastián</span>
+      <h1 id="heroH" style="margin-top:18px"></h1>
+      <p class="lede">Mándame tus estudios: los guardo de por vida, construyo tu <b>línea base personal</b> y te aviso cuando un valor se mueve respecto a <em>ti</em> — no respecto al promedio de todos.</p>
+      <div class="cta-row">
+        <a class="btn lg primary" href="#planes">Comenzar mi expediente <span class="arr">↘</span></a>
+        <a class="btn lg ghost" href="#idea">Ver la idea en acción →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="n">De por vida</div><div class="l">Tus datos<br>guardados</div></div>
+        <div class="hstat"><div class="n">Tu base</div><div class="l">No el rango<br>de todos</div></div>
+        <div class="hstat"><div class="n">El mismo</div><div class="l">Médico,<br>siempre</div></div>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <div class="hcard" aria-hidden="true">
+        <div class="float-pill"><span class="av"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9C1 8.8 2.6 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.4 0 5 3.3 3.3 6.5C19 16.4 12 21 12 21z"/></svg></span><span class="t"><b>DR. GUARDIOLA</b><span>Te leyó hace 2 min</span></span></div>
+        <div class="htag">Glucosa · tu línea base</div>
+        <div class="hbig">88 <small>mg/dL</small></div>
+        <div class="spark-wrap"><svg id="heroSpark" viewBox="0 0 360 90" preserveAspectRatio="none" role="presentation"></svg></div>
+        <div class="hrows">
+          <div class="hrow"><span class="nm">Colesterol LDL</span><span class="vl">128 <small>mg/dL</small></span><span class="tag warn">se movió</span></div>
+          <div class="hrow"><span class="nm">TSH</span><span class="vl">2.1 <small>µUI/mL</small></span><span class="tag ok">en tu base</span></div>
+          <div class="hrow"><span class="nm">HbA1c</span><span class="vl">5.4 <small>%</small></span><span class="tag or">tendencia ↘</span></div>
+        </div>
+        <div class="conf"><div class="k">◔ CONFIANZA</div><div class="v">P4 · alta</div><div class="s">7 observaciones</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ENSANUT -->
+<section class="band tight" id="mexico">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow kick">Por qué importa en México</span>
+      <h2 class="h2">Vivimos rodeados de riesgo <em>cardiometabólico.</em></h2>
+      <p class="lede">Cifras de adultos en México (ENSANUT 2022). No describen tu caso — describen por qué vigilar tu tendencia, a tiempo, vale la pena.</p>
+    </div>
+    <div class="statgrid">
+      <div class="gauge reveal d1">
+        <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="40"/><circle class="ring-fg gring" data-pct="22.1" cx="50" cy="50" r="40"/><text class="pct gnum" data-count="22.1" x="50" y="56" text-anchor="middle">0%</text></svg>
+        <span class="lab">de los adultos vive con <b>prediabetes</b></span>
+      </div>
+      <div class="gauge reveal d2">
+        <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="40"/><circle class="ring-fg gring" data-pct="18.3" cx="50" cy="50" r="40"/><text class="pct gnum" data-count="18.3" x="50" y="56" text-anchor="middle">0%</text></svg>
+        <span class="lab">vive con <b>diabetes</b></span>
+      </div>
+      <div class="gauge reveal d3">
+        <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="40"/><circle class="ring-fg gring" data-pct="29.9" cx="50" cy="50" r="40"/><text class="pct gnum" data-count="29.9" x="50" y="56" text-anchor="middle">0%</text></svg>
+        <span class="lab">vive con <b>hipertensión arterial</b></span>
+      </div>
+    </div>
+    <p class="statfoot">Fuente: ENSANUT 2022 (Salud Pública de México). Cifras poblacionales con fines de contexto.</p>
+  </div>
+</section>
+
+<!-- SIGNATURE: SCRUBBER -->
+<section class="band deep" id="idea">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">La idea que lo cambia todo · interactiva</span>
+      <h2 class="h2 center">Arrastra el tiempo y mira <em>quién avisa primero.</em></h2>
+      <p class="lede center">Una misma glucosa que sube poco a poco. El rango de <b>todos</b> tarda en notarlo; tu <b>línea base personal</b> lo ve mucho antes. Mueve el control.</p>
+    </div>
+    <div class="scrub-card reveal d1">
+      <div class="scrub-top">
+        <div class="readout">
+          <div class="ro"><span class="k">Mes</span><span class="v mono" id="roMonth">0</span></div>
+          <div class="ro"><span class="k">Glucosa</span><span class="v mono" id="roVal">84 mg/dL</span></div>
+          <div class="ro"><span class="k">Rango de todos</span><span class="v"><span class="dotc" id="dPop"></span><span id="roPop">Dentro de rango</span></span></div>
+          <div class="ro"><span class="k">Tu línea base</span><span class="v"><span class="dotc" id="dPer"></span><span id="roPer">En tu base</span></span></div>
+        </div>
+        <div class="lead-badge"><div class="n" id="leadN">≈ 0</div><div class="l">MESES DE VENTAJA</div></div>
+      </div>
+      <svg class="scrub-svg" id="scrub" viewBox="0 0 900 470" role="img"
+           aria-label="Gráfica interactiva: una glucosa que sube cruza tu umbral personal alrededor del mes 11 y el límite poblacional alrededor del mes 18, dejando cerca de 8 meses de ventaja."></svg>
+      <div class="scrub-controls">
+        <div class="slider-row"><span class="mlab">Mes <b id="mlab">0</b> / 24</span><input type="range" id="mSlider" min="0" max="240" value="0" step="1" aria-label="Línea de tiempo en meses"/></div>
+      </div>
+      <div class="legend">
+        <span style="color:var(--orange-2)"><i style="background:var(--orange)"></i>Tu trayectoria</span>
+        <span style="color:var(--ok)"><i style="background:rgba(43,110,100,.5)"></i>Tu línea base (banda estrecha)</span>
+        <span style="color:var(--alert)"><i class="dash"></i>Límite del rango poblacional</span>
+        <span style="color:var(--orange-2)"><i style="background:rgba(224,106,40,.4)"></i>Ventana de ventaja</span>
+      </div>
+      <p class="note">// Gráfica ilustrativa del concepto de lead-time. Los meses son un ejemplo, no una promesa: la ventaja real varía en cada persona.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TWO INTERACTIVE WIDGETS -->
+<section class="band tight">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">Dos preguntas que casi nadie te resuelve</span>
+      <h2 class="h2 center">El detalle fino, hecho <em>visible.</em></h2>
+    </div>
+    <div class="duo">
+      <div class="tcard reveal d1" id="rcv">
+        <h3>¿El cambio es real o es <em>ruido?</em></h3>
+        <p class="sub">Mueve tu resultado más reciente. Parte de un valor previo de <b class="mono">80 mg/dL</b>.</p>
+        <div class="rcv-read">
+          <span class="rcv-num mono">80</span><span class="rcv-arrow">→</span>
+          <span class="rcv-num mono" id="rcvCur" style="color:var(--orange)">96</span>
+          <span class="rcv-delta" id="rcvDelta">+20.0%</span>
+        </div>
+        <div class="rcv-bar"><div class="rcv-fill" id="rcvFill"></div><div class="rcv-thresh" id="rcvThresh"></div></div>
+        <div class="slider-row"><input type="range" id="rcvSlider" min="80" max="118" value="96" step="1" aria-label="Resultado más reciente"/></div>
+        <div class="verdict">
+          <div class="vrow"><span class="vk">RANGO DE TODOS</span><span class="vv" id="rcvPop"><span class="dotc"></span>—</span></div>
+          <div class="vrow"><span class="vk">TU RCV PERSONAL</span><span class="vv" id="rcvPer"><span class="dotc"></span>—</span></div>
+        </div>
+        <p class="rcv-lesson" id="rcvLesson"></p>
+      </div>
+
+      <div class="tcard reveal d2" id="curvas">
+        <h3>Tu “normal” es más <em>estrecho</em> que el de todos.</h3>
+        <p class="sub">Lo que varías <b>tú</b> entre estudios es mucho menos que lo que varían las personas entre sí. Desliza un valor y compáralo.</p>
+        <svg class="curve-svg" id="curves" viewBox="0 0 460 230" role="img"
+             aria-label="Dos campanas superpuestas: la tuya, estrecha; la poblacional, ancha. Un valor puede ser raro para ti y común para todos."></svg>
+        <div class="slider-row" style="margin-top:6px"><input type="range" id="curveSlider" min="76" max="110" value="95" step="1" aria-label="Un valor de glucosa"/></div>
+        <p class="curve-read" id="curveRead"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="band" id="que-es">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">Qué es Constancia</span>
+      <h2 class="h2 center">Una sola idea, en <em>tres partes.</em></h2>
+      <p class="lede center">Mándame todo, yo lo guardo de por vida y te oriento sobre cuándo necesitas a alguien más.</p>
+    </div>
+    <div class="pillars">
+      <div class="pcard reveal d1">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div>
+        <h3>Memoria</h3><p>Tus estudios, recetas y documentos ordenados y guardados de por vida. Nunca más empiezas de cero.</p>
+      </div>
+      <div class="pcard reveal d2">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 7 4-14 3 7h4"/></svg></div>
+        <h3>Vigilancia</h3><p>Tu línea base por estudio, tu tendencia y un aviso cuando un valor se mueve o amerita revisión.</p>
+      </div>
+      <div class="pcard reveal d3">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div>
+        <h3>Orientación</h3><p>Un médico que te conoce, te recuerda y te orienta — incluido cuándo <b>no</b> hace falta gastar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENSAJERIA: No es un bot + WhatsApp -->
+<section class="band deep" id="mensajeria">
+  <div class="wrap">
+    <div class="msg-head reveal">
+      <span class="eyebrow num"><b>08</b> Cómo seguimos · Mensajería</span>
+      <span class="msg-rule"></span>
+    </div>
+    <div class="msg-grid">
+      <div class="reveal d1">
+        <h2 class="bot-h">No es un bot. <span class="serif-i">Soy yo.</span></h2>
+        <p class="msg-p">Opero por telemedicina y mensajería. Te escribo personalmente cuando algo se mueve respecto a tu línea base — y también cuándo <b>no</b> necesitas gastar. La parte que casi nadie te dice.</p>
+        <div class="msg-cards">
+          <div class="mcard"><div class="mk">Respuesta</div><div class="mv">&lt; 4 h</div><div class="ms">Hábiles</div></div>
+          <div class="mcard"><div class="mk">Canal</div><div class="mv" style="font-size:24px">WhatsApp</div><div class="ms">Directo</div></div>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen">
+            <div class="wa-head">
+              <span class="back">←</span>
+              <span class="pa">SG</span>
+              <span class="pi"><b>Dr. Guardiola</b><span>en línea · tu médico de cabecera</span></span>
+              <span class="icons">📹 📞 ⋮</span>
+            </div>
+            <div class="wa-body" id="waBody">
+              <div class="wa-day">HOY</div>
+              <div class="typing" id="waTyping"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="band tight" id="como">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">Cómo funciona</span>
+      <h2 class="h2 center">Tres pasos. Tú casi <em>no haces nada.</em></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal d1"><div class="bn">PASO 01</div><h3>Mándame todo</h3><p>Subes tus estudios e historia. Yo los ordeno y construyo tu línea base.</p><span class="arrow">→</span></div>
+      <div class="step reveal d2"><div class="bn">PASO 02</div><h3>Yo vigilo</h3><p>Sigo tu tendencia estudio por estudio y comparo cada nuevo resultado contra ti.</p><span class="arrow">→</span></div>
+      <div class="step reveal d3"><div class="bn">PASO 03</div><h3>Te aviso</h3><p>Por WhatsApp, cuando algo se mueve — y también cuándo <b>no</b> necesitas gastar.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="band">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">La diferencia</span>
+      <h2 class="h2 center">No es la consulta <em>de siempre.</em></h2>
+    </div>
+    <div class="cmp">
+      <div class="cbox win reveal d1">
+        <div class="ctag">Con Constancia</div><h3>Tu salud, en una sola memoria</h3>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Tu historial guardado de por vida</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Tu línea base personal, no el rango de todos</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Avisos cuando un valor se mueve respecto a ti</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> El mismo médico, siempre</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Te oriento sobre cuándo NO gastar</div>
+      </div>
+      <div class="cbox old reveal d2">
+        <div class="ctag">Consulta tradicional</div><h3>Empiezas de cero cada vez</h3>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg> Tus estudios se pierden</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg> Te miden contra el promedio</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg> Sin seguimiento entre visitas</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg> Un médico distinto cada vez</div>
+        <div class="crow"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg> Gastas sin saber si hacía falta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="band deep" id="planes">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">Planes</span>
+      <h2 class="h2 center">Empieza gratis. Sube solo cuando <em>te convenga.</em></h2>
+      <p class="lede center">Los planes de volumen los trabaja el sistema; en los de alto contacto trabajo yo.</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal d1"><span class="ptag">PLAN 0</span><h3>Expediente Abierto</h3><div class="price">Gratis</div>
+        <ul><li>Sube y guarda de por vida</li><li>Gráfica simple de tus valores</li><li>Reporte mensual</li></ul>
+        <a class="pbtn" href="#final">Abrir gratis</a></div>
+      <div class="plan reveal d2"><span class="ptag">PLAN 1</span><h3>Bitácora Vigilada</h3><div class="price">$129<small> /mes</small></div>
+        <ul><li>Todo lo del Plan 0</li><li>Intervalo personalizado + tendencia</li><li>1 interpretación al mes</li><li>Alertas por WhatsApp</li></ul>
+        <a class="pbtn" href="#final">Elegir</a></div>
+      <div class="plan star reveal d3"><span class="ptag">PLAN 2 · ESTRELLA</span><h3>Médico de Cabecera</h3><div class="price">$399<small> /mes</small></div>
+        <ul><li>Mi interpretación firmada</li><li>Mi WhatsApp directo</li><li>Dudas ilimitadas + recetas</li><li>Nutrición y estudios integrados</li></ul>
+        <a class="pbtn" href="#final">Quiero este</a></div>
+      <div class="plan reveal d4"><span class="ptag">PLAN 3</span><h3>Acompañamiento Integral</h3><div class="price">$899<small> /mes</small></div>
+        <ul><li>Familiar (hasta 4) o crónico</li><li>Monitoreo diario</li><li>Respuesta &lt; 4 h hábiles</li><li>Prioridad y coordinación</li></ul>
+        <a class="pbtn" href="#final">Hablar conmigo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISES -->
+<section class="band tight" id="honestidad">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow kick">Honestidad por delante</span>
+      <h2 class="h2 center">Lo que sí te prometo — y lo que <em>no.</em></h2>
+      <p class="lede center">Mi credibilidad vale más que una venta. Te digo la verdad de lo que esto hace.</p>
+    </div>
+    <div class="prom">
+      <div class="pbx yes reveal d1"><h3><span style="color:var(--ok)">✓</span> Sí te prometo</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Guardar y ordenar tus estudios de por vida.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Construir tu intervalo personalizado conforme haya datos, y mostrarte tu tendencia.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Avisarte cuando un valor se mueva respecto a tu línea base.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Orientarte sobre cuándo sí y cuándo no gastar.</li>
+        </ul>
+      </div>
+      <div class="pbx no reveal d2"><h3><span style="color:var(--orange)">✕</span> No te prometo</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg> Diagnosticar lo que requiere verse en persona.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg> Sustituir a tu médico o atender una urgencia.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg> Curar, prevenir o garantizar un resultado.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final" id="final">
+  <div class="wrap reveal">
+    <span class="eyebrow kick" style="justify-content:center">Empieza hoy</span>
+    <h2 style="margin-top:14px">¿La salud es para <em>olvidarla?</em><br>No estamos de acuerdo.</h2>
+    <p class="lede center" style="margin-top:22px">Abre tu expediente gratis. Nunca más pierdas un estudio ni empieces de cero. Pruébalo un trimestre; si no te aporta, lo dejas sin bronca.</p>
+    <div class="cta-row">
+      <a class="btn lg primary" href="#top">Abrir mi expediente gratis <span class="arr">→</span></a>
+      <a class="btn lg ghost" href="#planes">Ver los planes</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft">
+      <div>
+        <div class="fb">constancia<span class="dot"></span></div>
+        <p class="fdesc">Tu médico de cabecera digital. Memoria médica central y seguimiento longitudinal — para toda la vida.</p>
+      </div>
+      <div class="fcol">
+        <h4>Producto</h4>
+        <a href="#idea">El método</a><a href="#mensajeria">Cómo seguimos</a><a href="#como">Cómo funciona</a><a href="#planes">Planes</a>
+      </div>
+      <div class="fcol">
+        <h4>Confianza</h4>
+        <a href="#honestidad">Lo que prometo</a><a href="#final">Aviso de privacidad</a><a href="#final">Contacto</a>
+      </div>
+    </div>
+    <p class="fn">Dr. Sebastián Guardiola Segovia · Aguascalientes, México · Cédula Profesional 12324613. Esto es información y seguimiento médico; no sustituye una consulta presencial. Ante una urgencia, acude a servicios de emergencia. El tratamiento de datos de salud requiere tu consentimiento expreso y por escrito. Contenido orientativo. Cifras poblacionales citadas con fines de contexto (ENSANUT 2022).</p>
+  </div>
+  <div class="giant">constancia<span class="dot"></span></div>
+</footer>
+
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS="http://www.w3.org/2000/svg";
+  function el(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  var COL={ok:"#2B6E64",warn:"#C2841F",alert:"#C2452F",orange:"#E06A28",orange2:"#C2541A",ink:"#1A1916",mute:"#8A857A"};
+
+  /* hero word stagger */
+  var heroH=document.getElementById('heroH');
+  var parts=[{t:"Tu médico de"},{t:"cabecera,"},{t:"para toda",em:true},{t:"la vida.",em:true}];
+  var html="",wi=0;
+  parts.forEach(function(seg,si){
+    seg.t.split(" ").forEach(function(w){
+      var d=0.18+wi*0.06;
+      html+='<span class="word'+(seg.em?' serif-i':'')+'" style="animation-delay:'+d+'s">'+w+'&nbsp;</span>';
+      wi++;
+    });
+    if(si===1) html+='<br>';
+  });
+  heroH.innerHTML=html;
+
+  /* hero sparkline */
+  (function(){
+    var svg=document.getElementById('heroSpark'); if(!svg)return;
+    var W=360,H=90,pts=[],n=44,seed=11;
+    function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+    for(var i=0;i<n;i++){var t=i/(n-1);
+      var v=50 - Math.sin(t*5.6)*8 - t*4 + (rnd()-0.5)*6;
+      if(i%13===5)v-=16;
+      pts.push([8+t*(W-16),Math.max(10,Math.min(H-8,v))]);}
+    var d="M"+pts.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" L");
+    svg.appendChild(el("rect",{x:8,y:34,width:W-16,height:26,rx:6,fill:"rgba(43,110,100,.10)"}));
+    var defs=el("defs",{});var gr=el("linearGradient",{id:"hsg",x1:0,y1:0,x2:1,y2:0});
+    gr.appendChild(el("stop",{offset:"0%","stop-color":COL.ok}));
+    gr.appendChild(el("stop",{offset:"100%","stop-color":COL.orange}));
+    defs.appendChild(gr);svg.appendChild(defs);
+    var path=el("path",{d:d,fill:"none",stroke:"url(#hsg)","stroke-width":2.4,"stroke-linecap":"round","stroke-linejoin":"round"});
+    svg.appendChild(path);
+    var tip=el("circle",{r:4,fill:"#fff",stroke:COL.orange,"stroke-width":2,cx:pts[n-1][0],cy:pts[n-1][1]});svg.appendChild(tip);
+    if(!rm){var len=path.getTotalLength();path.style.strokeDasharray=len;path.style.strokeDashoffset=len;
+      path.style.transition="stroke-dashoffset 2.2s cubic-bezier(.3,.6,.2,1) .7s";
+      tip.style.opacity=0;tip.style.transition="opacity .4s ease 2.5s";
+      requestAnimationFrame(function(){path.style.strokeDashoffset=0;tip.style.opacity=1;});}
+  })();
+
+  /* nav + progress */
+  var nav=document.getElementById('nav'),prog=document.getElementById('prog');
+  function onScroll(){nav.classList.toggle('scrolled',window.scrollY>14);
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?(window.scrollY/h*100):0)+'%';}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* reveals */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(x){io.observe(x);});
+
+  /* ENSANUT gauges */
+  function countTo(elm,t,sfx){var dec=(t%1!==0)?1:0;
+    if(rm){elm.textContent=t.toFixed(dec)+sfx;return;}
+    var s=null,dur=1500;function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/dur,1),e=1-Math.pow(1-p,3);
+      elm.textContent=(t*e).toFixed(dec)+sfx;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+  var C=2*Math.PI*40;
+  document.querySelectorAll('.gring').forEach(function(r){r.style.strokeDasharray=C;r.style.strokeDashoffset=C;});
+  var gio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
+    var ring=e.target.querySelector('.gring'),num=e.target.querySelector('.gnum');
+    var pct=parseFloat(ring.getAttribute('data-pct'));
+    ring.style.strokeDashoffset=rm?(C*(1-pct/100)):C;
+    if(!rm)requestAnimationFrame(function(){ring.style.strokeDashoffset=C*(1-pct/100);});
+    countTo(num,parseFloat(num.getAttribute('data-count')),'%');gio.unobserve(e.target);
+  }});},{threshold:.5});
+  document.querySelectorAll('.gauge').forEach(function(g){gio.observe(g);});
+
+  /* SCRUBBER */
+  (function(){
+    var svg=document.getElementById('scrub');if(!svg)return;
+    var X0=78,X1=862,Y0=54,Y1=384,VMAX=112,VMIN=78,MONTHS=24;
+    var baseline=84,personalLo=79,personalHi=91,popHi=100;
+    function xFor(m){return X0+(m/MONTHS)*(X1-X0);}
+    function yFor(v){return Y0+(VMAX-v)/(VMAX-VMIN)*(Y1-Y0);}
+    function val(m){return baseline+24*Math.pow(m/MONTHS,1.5);}
+    function crossM(t){return MONTHS*Math.pow((t-baseline)/24,1/1.5);}
+    var mPer=crossM(personalHi),mPop=crossM(popHi),ventaja=Math.round(mPop-mPer);
+
+    var defs=el("defs",{});
+    var lg=el("linearGradient",{id:"trajg",x1:0,y1:0,x2:1,y2:0});
+    lg.appendChild(el("stop",{offset:"0%","stop-color":COL.ok}));
+    lg.appendChild(el("stop",{offset:"55%","stop-color":COL.orange}));
+    lg.appendChild(el("stop",{offset:"100%","stop-color":COL.alert}));
+    defs.appendChild(lg);svg.appendChild(defs);
+
+    var g=el("g",{stroke:"rgba(26,25,22,.06)","stroke-width":1});
+    [78,84,91,100,108].forEach(function(v){var y=yFor(v);g.appendChild(el("line",{x1:X0,y1:y,x2:X1,y2:y}));});
+    svg.appendChild(g);
+
+    svg.appendChild(el("rect",{x:xFor(mPer),y:Y0,width:xFor(mPop)-xFor(mPer),height:Y1-Y0,fill:"rgba(224,106,40,.10)",stroke:"rgba(224,106,40,.4)","stroke-dasharray":"3 5"}));
+    var wl=el("text",{x:(xFor(mPer)+xFor(mPop))/2,y:Y0-10,"text-anchor":"middle","font-family":"IBM Plex Mono","font-size":12,fill:COL.orange2});wl.textContent="ventana de ventaja";svg.appendChild(wl);
+
+    svg.appendChild(el("rect",{x:X0,y:yFor(personalHi),width:X1-X0,height:yFor(personalLo)-yFor(personalHi),fill:"rgba(43,110,100,.12)"}));
+    svg.appendChild(el("line",{x1:X0,y1:yFor(personalHi),x2:X1,y2:yFor(personalHi),stroke:"rgba(43,110,100,.55)","stroke-width":1.5}));
+    var pbt=el("text",{x:X0+8,y:yFor(personalHi)+18,"font-family":"IBM Plex Mono","font-size":11.5,fill:COL.ok});pbt.textContent="tu línea base (91)";svg.appendChild(pbt);
+
+    svg.appendChild(el("line",{x1:X0,y1:yFor(popHi),x2:X1,y2:yFor(popHi),stroke:COL.alert,"stroke-width":2,"stroke-dasharray":"2 7","stroke-linecap":"round"}));
+    var plt=el("text",{x:X1-8,y:yFor(popHi)-9,"text-anchor":"end","font-family":"IBM Plex Mono","font-size":11.5,fill:COL.alert});plt.textContent="límite poblacional (100)";svg.appendChild(plt);
+
+    var dFull="M";for(var m=0;m<=MONTHS;m+=0.5){dFull+=(m===0?"":" L")+xFor(m).toFixed(1)+","+yFor(val(m)).toFixed(1);}
+    svg.appendChild(el("path",{d:dFull,fill:"none",stroke:"rgba(26,25,22,.12)","stroke-width":2}));
+    var trajProg=el("path",{d:dFull,fill:"none",stroke:"url(#trajg)","stroke-width":4,"stroke-linecap":"round"});svg.appendChild(trajProg);
+
+    function marker(m,c){var gg=el("g",{});gg.appendChild(el("circle",{cx:xFor(m),cy:yFor(val(m)),r:14,fill:c,opacity:.16}));gg.appendChild(el("circle",{cx:xFor(m),cy:yFor(val(m)),r:6,fill:c}));return gg;}
+    svg.appendChild(marker(mPer,COL.ok));svg.appendChild(marker(mPop,COL.alert));
+
+    var dotHalo=el("circle",{r:16,fill:COL.orange,opacity:.16,cx:xFor(0),cy:yFor(val(0))});
+    var dot=el("circle",{r:8,fill:"#fff",stroke:COL.orange,"stroke-width":3,cx:xFor(0),cy:yFor(val(0))});
+    var vline=el("line",{x1:xFor(0),y1:Y0,x2:xFor(0),y2:Y1,stroke:"rgba(26,25,22,.2)","stroke-width":1,"stroke-dasharray":"3 4"});
+    svg.appendChild(vline);svg.appendChild(dotHalo);svg.appendChild(dot);
+
+    var xa=el("text",{x:X0,y:Y1+34,"font-family":"IBM Plex Mono","font-size":12,fill:COL.mute});xa.textContent="Hoy";svg.appendChild(xa);
+    var xb=el("text",{x:X1,y:Y1+34,"text-anchor":"end","font-family":"IBM Plex Mono","font-size":12,fill:COL.mute});xb.textContent="24 meses después →";svg.appendChild(xb);
+
+    var slider=document.getElementById('mSlider');
+    var roMonth=document.getElementById('roMonth'),roVal=document.getElementById('roVal'),roPop=document.getElementById('roPop'),roPer=document.getElementById('roPer'),dPop=document.getElementById('dPop'),dPer=document.getElementById('dPer'),leadN=document.getElementById('leadN'),mlab=document.getElementById('mlab');
+
+    function setProgress(m){var d="M";for(var mm=0;mm<=m+0.0001;mm+=0.5){var mc=Math.min(mm,m);d+=(mm===0?"":" L")+xFor(mc).toFixed(1)+","+yFor(val(mc)).toFixed(1);}d+=" L"+xFor(m).toFixed(1)+","+yFor(val(m)).toFixed(1);trajProg.setAttribute("d",d);}
+    function update(m){var v=val(m),x=xFor(m),y=yFor(v);
+      dot.setAttribute('cx',x);dot.setAttribute('cy',y);dotHalo.setAttribute('cx',x);dotHalo.setAttribute('cy',y);vline.setAttribute('x1',x);vline.setAttribute('x2',x);setProgress(m);
+      roMonth.textContent=m.toFixed(0);mlab.textContent=m.toFixed(0);roVal.textContent=v.toFixed(0)+" mg/dL";
+      var pop=v<popHi?{t:"Dentro de rango",c:COL.ok}:{t:"Fuera de rango",c:COL.alert};
+      var per=v<=personalHi?{t:"En tu base",c:COL.ok}:(v<popHi?{t:"Se movió respecto a ti",c:COL.warn}:{t:"Muy por encima de tu base",c:COL.alert});
+      roPop.textContent=pop.t;dPop.style.background=pop.c;roPer.textContent=per.t;dPer.style.background=per.c;
+      leadN.textContent="≈ "+ventaja;}
+    function setM(m){m=Math.max(0,Math.min(MONTHS,m));slider.value=(m*10).toFixed(0);update(m);}
+    slider.addEventListener('input',function(){update(this.value/10);});
+
+    var played=false;
+    var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!played){played=true;
+      if(rm){setM(MONTHS);cio.disconnect();return;}
+      var start=null,dur=4200;function anim(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);var e2=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;setM(e2*MONTHS);if(p<1)requestAnimationFrame(anim);}requestAnimationFrame(anim);cio.disconnect();}});},{threshold:.4});
+    cio.observe(svg);update(0);
+  })();
+
+  /* RCV */
+  (function(){
+    var slider=document.getElementById('rcvSlider');if(!slider)return;
+    var prev=80,RCV=17.7,MAXPCT=50;
+    var cur=document.getElementById('rcvCur'),delta=document.getElementById('rcvDelta'),fill=document.getElementById('rcvFill'),thresh=document.getElementById('rcvThresh'),vpop=document.getElementById('rcvPop'),vper=document.getElementById('rcvPer'),lesson=document.getElementById('rcvLesson');
+    thresh.style.left=(RCV/MAXPCT*100)+'%';
+    function dotEl(c){return '<span class="dotc" style="background:'+c+'"></span>';}
+    function update(v){var pct=(v-prev)/prev*100;cur.textContent=v;delta.textContent=(pct>=0?'+':'')+pct.toFixed(1)+'%';
+      fill.style.width=Math.min(100,Math.abs(pct)/MAXPCT*100)+'%';
+      var inPop=(v>=70&&v<=99)&&(prev>=70&&prev<=99);
+      vpop.innerHTML=inPop?dotEl(COL.ok)+'Ambos dentro de rango':dotEl(COL.warn)+'Algún valor fuera de rango';
+      var real=Math.abs(pct)>=RCV;
+      vper.innerHTML=real?dotEl(COL.orange)+'Cambio real (supera tu RCV)':dotEl(COL.ok)+'Dentro del ruido esperado';
+      if(inPop&&real)lesson.innerHTML='Aquí está el punto: <b style="color:var(--ink)">para el rango de todos no pasó nada</b> — pero el cambio ya superó tu ruido biológico. Tu línea base lo ve; el promedio, no.';
+      else if(!inPop&&real)lesson.innerHTML='El valor salió de rango <b style="color:var(--ink)">y</b> el cambio es real. Ambos enfoques coinciden — pero el tuyo lo habría señalado antes.';
+      else if(inPop&&!real)lesson.innerHTML='Todo tranquilo: dentro de rango y dentro de tu variación normal. <b style="color:var(--ink)">También importa saber cuándo NO preocuparse.</b>';
+      else lesson.innerHTML='Fuera de rango, pero el cambio aún cabe en tu ruido esperado. Conviene confirmar antes de alarmarse.';}
+    slider.addEventListener('input',function(){update(+this.value);});
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){update(+slider.value);io2.unobserve(e.target);}});},{threshold:.4});io2.observe(slider);update(96);
+  })();
+
+  /* CURVES */
+  (function(){
+    var svg=document.getElementById('curves');if(!svg)return;
+    var W=460,YB=190,X0=20,X1=440,VMIN=70,VMAX=115;
+    var perMean=84,perSd=3.5,popMean=88,popSd=11;
+    function xFor(v){return X0+(v-VMIN)/(VMAX-VMIN)*(X1-X0);}
+    function gauss(x,m,s){return Math.exp(-0.5*Math.pow((x-m)/s,2));}
+    function cp(m,s,sc){var d="M"+X0+","+YB;for(var v=VMIN;v<=VMAX;v+=0.6){d+=" L"+xFor(v).toFixed(1)+","+(YB-gauss(v,m,s)*sc).toFixed(1);}d+=" L"+X1+","+YB+" Z";return d;}
+    var defs=el("defs",{});var gp=el("linearGradient",{id:"perg",x1:0,y1:0,x2:0,y2:1});
+    gp.appendChild(el("stop",{offset:"0%","stop-color":"rgba(224,106,40,.5)"}));
+    gp.appendChild(el("stop",{offset:"100%","stop-color":"rgba(224,106,40,.05)"}));
+    defs.appendChild(gp);svg.appendChild(defs);
+    svg.appendChild(el("line",{x1:X0,y1:YB,x2:X1,y2:YB,stroke:"rgba(26,25,22,.12)","stroke-width":1}));
+    var pop=el("path",{d:cp(popMean,popSd,150),fill:"rgba(26,25,22,.05)",stroke:"rgba(138,133,122,.8)","stroke-width":1.5});svg.appendChild(pop);
+    var per=el("path",{d:cp(perMean,perSd,150),fill:"url(#perg)",stroke:COL.orange,"stroke-width":2});svg.appendChild(per);
+    var l1=el("text",{x:xFor(perMean),y:YB-150-8,"text-anchor":"middle","font-family":"IBM Plex Mono","font-size":11,fill:COL.orange2});l1.textContent="tú";svg.appendChild(l1);
+    var l2=el("text",{x:xFor(popMean)+62,y:YB-46,"font-family":"IBM Plex Mono","font-size":11,fill:COL.mute});l2.textContent="todos";svg.appendChild(l2);
+    var mk=el("line",{x1:xFor(95),y1:30,x2:xFor(95),y2:YB,stroke:COL.ink,"stroke-width":2,"stroke-dasharray":"3 4"});
+    var mkd=el("circle",{cx:xFor(95),cy:YB,r:5,fill:COL.ink});svg.appendChild(mk);svg.appendChild(mkd);
+    [70,80,90,100,110].forEach(function(v){var t=el("text",{x:xFor(v),y:YB+18,"text-anchor":"middle","font-family":"IBM Plex Mono","font-size":10,fill:COL.mute});t.textContent=v;svg.appendChild(t);});
+    if(!rm){[pop,per].forEach(function(p){p.style.opacity=0;p.style.transition="opacity .9s ease";});}
+    var read=document.getElementById('curveRead'),slider=document.getElementById('curveSlider');
+    function zl(z){z=Math.abs(z);return z<1?"dentro de lo común":z<2?"poco usual":z<3?"raro":"muy raro";}
+    function update(v){mk.setAttribute('x1',xFor(v));mk.setAttribute('x2',xFor(v));mkd.setAttribute('cx',xFor(v));
+      var zp=(v-perMean)/perSd,za=(v-popMean)/popSd;
+      read.innerHTML='Un valor de <b>'+v+' mg/dL</b>:<br>· Para <b style="color:var(--orange-2)">ti</b> → z = '+zp.toFixed(1)+' ('+zl(zp)+')<br>· Para <b style="color:var(--mute)">todos</b> → z = '+za.toFixed(1)+' ('+zl(za)+')';}
+    slider.addEventListener('input',function(){update(+this.value);});
+    var io3=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!rm){pop.style.opacity=1;setTimeout(function(){per.style.opacity=1;},250);}else{pop.style.opacity=1;per.style.opacity=1;}update(+slider.value);io3.unobserve(e.target);}});},{threshold:.4});io3.observe(svg);update(95);
+  })();
+
+  /* WHATSAPP conversation (sequential reveal) */
+  (function(){
+    var body=document.getElementById('waBody'),typing=document.getElementById('waTyping');if(!body)return;
+    var msgs=[
+      {s:'in',t:'Buenos días Diana 👋 Te escribo por tu glucosa de hoy.',h:'09:24'},
+      {s:'in',t:'Salió en 101. Para el laboratorio entra en “normal”, pero conozco tus últimos 7 estudios y tu rango personal está entre 82 y 96. Algo se movió en ti.',h:'09:24'},
+      {s:'out',t:'¿Necesito ir a consulta? ¿Medicamento?',h:'09:25'},
+      {s:'in',t:'No todavía. Tu confianza es P4 (7 estudios). Repetimos en 3 meses. Si pasa de 105, te veo en consulta.',h:'09:26'},
+      {s:'out',t:'¿Y si no me muevo de rango igual?',h:'09:27'},
+      {s:'in',t:'Entonces no necesitas gastar en consulta ni estudios extra 😊 Saber cuándo no gastar también es parte de cuidarte.',h:'09:28'}
+    ];
+    function bubble(m){
+      var b=document.createElement('div');b.className='bub '+m.s+(m.hi?' hi':'');
+      var ck=m.s==='out'?' <span class="ck">✓✓</span>':'';
+      b.innerHTML=m.t+'<span class="ti">'+m.h+ck+'</span>';
+      return b;
+    }
+    function addAll(){msgs.forEach(function(m){var b=bubble(m);b.classList.add('show');body.insertBefore(b,typing);});}
+    var started=false;
+    function run(){
+      if(started)return;started=true;
+      if(rm){addAll();return;}
+      var i=0;
+      function next(){
+        if(i>=msgs.length){typing.classList.remove('show');return;}
+        var m=msgs[i];
+        if(m.s==='in'){
+          typing.classList.add('show');
+          setTimeout(function(){
+            typing.classList.remove('show');
+            var b=bubble(m);body.insertBefore(b,typing);
+            requestAnimationFrame(function(){b.classList.add('show');});
+            i++;setTimeout(next,650);
+          },900);
+        } else {
+          var b=bubble(m);body.insertBefore(b,typing);
+          requestAnimationFrame(function(){b.classList.add('show');});
+          i++;setTimeout(next,820);
+        }
+      }
+      setTimeout(next,500);
+    }
+    var wio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run();wio.unobserve(e.target);}});},{threshold:.4});
+    wio.observe(body);
+  })();
+
+})();
+</script>
+</body>
+</html>
